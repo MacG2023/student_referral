@@ -1,0 +1,41 @@
+{% extends 'referral/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Your Transactions</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Admission</th>
+                    <th>Installment No</th>
+                    <th>Installment Amount</th>
+                    <th>Agent Commission</th>
+                    <th>Agency Commission</th>
+                    <th>Agent Rate Applied</th>
+                    <th>Agency Rate Applied</th>
+                    <th>Created Date</th>
+                    <th>Modified Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.admission }}</td>
+                        <td>{{ transaction.installment_no }}</td>
+                        <td>{{ transaction.installment_amt }}</td>
+                        <td>{{ transaction.agent_commission }}</td>
+                        <td>{{ transaction.agency_commission }}</td>
+                        <td>{{ transaction.agent_rate_applied }}</td>
+                        <td>{{ transaction.agency_rate_applied }}</td>
+                        <td>{{ transaction.created_date }}</td>
+                        <td>{{ transaction.modified_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

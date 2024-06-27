@@ -7,7 +7,7 @@ class Agent(AbstractUser):
         ('Individual', 'Individual'),
     ]
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)
-    default_rate = models.DecimalField(max_digits=5, decimal_places=2)
+    default_rate = models.DecimalField(max_digits=5, decimal_places=2 , null=True)
     phone_no = models.CharField(max_length=15)
     email_id = models.EmailField()
     created_by = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, related_name='agent_creator')
