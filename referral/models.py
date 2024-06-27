@@ -14,7 +14,10 @@ class Agent(AbstractUser):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_by = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, related_name='agent_modifier')
     modified_date = models.DateTimeField(auto_now=True)
-
+    admin = models.BooleanField(default=False)
+    def __str__(self):
+        return self.username
+    
 class Student(models.Model):
     student_id = models.CharField(max_length=15, unique=True)
     given_name = models.CharField(max_length=50)
@@ -26,6 +29,9 @@ class Student(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_by = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True, related_name='student_modifier')
     modified_date = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.given_name + " " + self.surname
 
 class Institution(models.Model):
     name = models.CharField(max_length=100)
@@ -35,6 +41,8 @@ class Institution(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_by = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True, related_name='institution_modifier')
     modified_date = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.name
 
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
@@ -44,6 +52,8 @@ class Course(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_by = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True, related_name='course_modifier')
     modified_date = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.course_name
 
 class Admission(models.Model):
     start_year = models.IntegerField()
@@ -59,6 +69,8 @@ class Admission(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_by = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True, related_name='admission_modifier')
     modified_date = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.student.given_name + " " + self.student.surname
 
 class AdmissionStatus(models.Model):
     status_name = models.CharField(max_length=50)

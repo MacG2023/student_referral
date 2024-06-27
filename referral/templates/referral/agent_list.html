@@ -1,0 +1,42 @@
+{% extends 'referral/base.html' %}
+
+{% block title %}Agent List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h2>Agent List</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Default Rate</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for agent in agents %}
+                    <tr>
+                        <td>{{ agent.id }}</td>
+                        <td>{{ agent.name }}</td>
+                        <td>{{ agent.type }}</td>
+                        <td>{{ agent.default_rate }}</td>
+                        <td>
+                            <a href="{% url 'edit_agent' agent.id %}" class="btn btn-sm btn-primary">Edit</a>
+                            <!-- Add delete button if needed -->
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No agents found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

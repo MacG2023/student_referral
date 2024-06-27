@@ -1,0 +1,33 @@
+{% extends 'referral/base.html' %}
+
+{% block title %}Institution List{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2>Institution List</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Country</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for institution in institutions %}
+                <tr>
+                    <td>{{ institution.name }}</td>
+                    <td>{{ institution.location }}</td>
+                    <td>{{ institution.country }}</td>
+                    <td>
+                        <a href="{% url 'edit_institution' institution.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
