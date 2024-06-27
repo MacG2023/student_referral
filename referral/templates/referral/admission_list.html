@@ -4,9 +4,9 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <h2>Admission List</h2>
-        <table class="table table-striped">
+        <table class="table table-striped table-sm">
             <thead>
                 <tr>
                     <th>Start Year</th>
@@ -14,6 +14,7 @@
                     <th>Institution</th>
                     <th>Course</th>
                     <th>Fee</th>
+                    <th>Commission Rate</th>
                     <th>Agent Rate</th>
                     <th>Agency Rate</th>
                     <th>Installments Planned</th>
@@ -24,11 +25,12 @@
             <tbody>
                 {% for admission in admissions %}
                 <tr>
-                    <td>{{ admission.start_year }}</td>
+                    <td>{{ admission.month }} - {{ admission.start_year }}</td>
                     <td>{{ admission.student }}</td>
                     <td>{{ admission.institution }}</td>
                     <td>{{ admission.course }}</td>
                     <td>{{ admission.fee }}</td>
+                    <td>{{ admission.commission_rate }}</td>
                     <td>{{ admission.agent_rate_applied }}</td>
                     <td>{{ admission.agency_rate_applied }}</td>
                     <td>{{ admission.no_of_installments_planned }}</td>

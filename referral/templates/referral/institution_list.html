@@ -13,6 +13,8 @@
                     <th>Location</th>
                     <th>Country</th>
                     <th>Actions</th>
+                    <th>Contact No</th>
+                    <th>Email</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +23,8 @@
                     <td>{{ institution.name }}</td>
                     <td>{{ institution.location }}</td>
                     <td>{{ institution.country }}</td>
+                    <td>{{ institution.contact_no }}</td>
+                    <td>{{ institution.email }}</td>
                     <td>
                         <a href="{% url 'edit_institution' institution.pk %}" class="btn btn-secondary btn-sm">Edit</a>
                     </td>

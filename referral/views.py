@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Admission, AdmissionTransaction, Agent, Course
-from .forms import AdmissionForm, AgentCreationForm, CourseForm, StudentForm, InstitutionForm
+from .forms import AdmissionForm, AgentChangeForm, AgentCreationForm, CourseForm, StudentForm, InstitutionForm
 
 from .models import Student,Institution
 
@@ -59,12 +59,12 @@ def agent_list_view(request):
 def edit_agent_view(request, agent_id):
     agent = get_object_or_404(Agent, id=agent_id)
     if request.method == 'POST':
-        form = AgentCreationForm(request.POST, instance=agent)
+        form = AgentChangeForm(request.POST, instance=agent)
         if form.is_valid():
             form.save()
             return redirect('agent_list')  # Redirect to agent list after successful update
     else:
-        form = AgentCreationForm(instance=agent)
+        form = AgentChangeForm(instance=agent)
     
     return render(request, 'referral/edit_agent.html', {'form': form, 'agent': agent})
 

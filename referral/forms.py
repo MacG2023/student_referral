@@ -1,11 +1,17 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Admission, Agent, Course, Student, Institution
 
 class AgentCreationForm(UserCreationForm):
     class Meta:
         model = Agent
         fields = ['username', 'first_name', 'last_name', 'email', 'phone_no', 'type', 'default_rate', 'admin']
+
+
+class AgentChangeForm(UserCreationForm):
+    class Meta:
+        model = Agent
+        fields = [ 'first_name', 'last_name', 'email', 'phone_no', 'type', 'default_rate', 'admin']
 
 
 
@@ -22,10 +28,11 @@ class StudentForm(forms.ModelForm):
         ]
 
 
+
 class InstitutionForm(forms.ModelForm):
     class Meta:
         model = Institution
-        fields = ['name', 'location', 'country']
+        fields = ['name', 'location', 'country', 'email', 'contact_no']
         
 
 
@@ -33,11 +40,13 @@ class InstitutionForm(forms.ModelForm):
 class AdmissionForm(forms.ModelForm):
     class Meta:
         model = Admission
-        fields = [
-            'start_year', 'student', 'institution', 'course', 'fee', 
-            'agent_rate_applied', 'agency_rate_applied', 
-            'no_of_installments_planned', 'status'
-        ]
+        # fields = [
+        #     'start_year', 'student', 'institution', 'course', 'fee', 
+        #     'agent_rate_applied', 'agency_rate_applied', 
+        #     'no_of_installments_planned', 'status'
+        # ]
+        fields = ['start_year', 'month', 'student', 'institution', 'course', 'fee', 'agent_rate_applied',
+                  'agency_rate_applied', 'no_of_installments_planned', 'status', 'commission_rate']
         
         
 

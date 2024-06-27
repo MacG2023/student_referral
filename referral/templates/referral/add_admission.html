@@ -2,15 +2,63 @@
 
 {% block title %}Add Admission{% endblock %}
 
+{% load custom_filters %}
+
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h2>Add Admission</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Add Admission</button>
-        </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h2 class="text-center">Add New Admission</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'add_admission' %}">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {% if field.name == 'start_year' %}
+                            <select name="{{ field.name }}" class="form-control">
+                                {% for year in field.field.choices %}
+                                <option value="{{ year.0 }}">{{ year.1 }}</option>
+                                {% endfor %}
+                            </select>
+                            {% elif field.name == 'month' %}
+                            <select name="{{ field.name }}" class="form-control">
+                                {% for month in field.field.choices %}
+                                <option value="{{ month.0 }}">{{ month.1 }}</option>
+                                {% endfor %}
+                            </select>
+                            {% elif field.name == 'status' %}
+                            <select name="{{ field.name }}" class="form-control">
+                                {% for status in field.field.choices %}
+                                <option value="{{ status.0 }}">{{ status.1 }}</option>
+                                {% endfor %}
+                            </select>
+                            {% else %}
+                            {{ field|add_class:"form-control" }}
+                            {% endif %}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                            <small class="form-text text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <div class="form-group">
+                            <small class="form-text text-danger">{{ error }}</small>
+                        </div>
+                        {% endfor %}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add Admission</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

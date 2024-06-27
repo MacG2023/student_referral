@@ -1,6 +1,6 @@
 {% extends 'referral/base.html' %}
 
-{% block title %}Add Course{% endblock %}
+{% block title %}Edit Agent{% endblock %}
 
 {% load custom_filters %}
 
@@ -10,10 +10,10 @@
         <div class="col-md-8">
             <div class="card mt-5">
                 <div class="card-header">
-                    <h2 class="text-center">Add New Course</h2>
+                    <h2 class="text-center">Edit Agent</h2>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{% url 'add_course' %}">
+                    <form method="post" action="{% url 'edit_agent' agent.id %}">
                         {% csrf_token %}
                         {% for field in form %}
                         <div class="form-group">
@@ -33,7 +33,7 @@
                         </div>
                         {% endfor %}
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Add Course</button>
+                            <button type="submit" class="btn btn-primary">Update Agent</button>
                         </div>
                     </form>
                 </div>
