@@ -30,7 +30,7 @@ def home_view(request):
 
 
 
-# from django.shortcuts import render, redirect
+# from django.shortcuts import render, 
 # 
 # f
 
@@ -273,3 +273,32 @@ def delete_course(request, pk):
         messages.success(request, 'Course deleted successfully.')
         return redirect('course_list')
     return render(request, 'referral/course_list.html')
+
+
+
+def delete_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    if request.method == 'POST':
+        student.delete()
+        messages.success(request, 'Student deleted successfully.')
+        return redirect('student_list')
+    return render(request, 'referral/student_list.html')
+
+
+def delete_institution(request, pk):
+    institution = get_object_or_404(Institution, pk=pk)
+    if request.method == 'POST':
+        institution.delete()
+        messages.success(request, 'institution deleted successfully.')
+        return redirect('institution_list')
+    return render(request, 'referral/student_list.html')
+
+
+def delete_agent(request, pk):
+    agent = get_object_or_404(Agent, pk=pk)
+    if request.method == 'POST':
+        agent.delete()
+        messages.success(request, 'Agent deleted successfully.')
+        return redirect('agent_list')
+    return render(request, 'referral/agent_list.html')
+
