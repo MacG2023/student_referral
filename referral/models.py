@@ -37,6 +37,10 @@ class Student(models.Model):
     
     def __str__(self):
         return self.given_name + " " + self.surname
+    @property
+    def full_name(self):
+        return f"{self.given_name} {self.surname}"
+        
 
 class Institution(models.Model):
     name = models.CharField(max_length=100)
@@ -106,7 +110,7 @@ class Admission(models.Model):
         ('Dropout', 'Dropout'),
         ('Payment Completed', 'Payment Completed'),
     ]
-
+    
     start_year = models.IntegerField(choices=YEAR_CHOICES)
     month = models.IntegerField(choices=MONTH_CHOICES, null=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

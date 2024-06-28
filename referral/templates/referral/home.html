@@ -1,41 +1,131 @@
-{% extends 'referral/base.html' %}
-
-{% block title %}Home{% endblock %}
-
-{% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <h2>Your Transactions</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Admission</th>
-                    <th>Installment No</th>
-                    <th>Installment Amount</th>
-                    <th>Agent Commission</th>
-                    <th>Agency Commission</th>
-                    <th>Agent Rate Applied</th>
-                    <th>Agency Rate Applied</th>
-                    <th>Created Date</th>
-                    <th>Modified Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for transaction in transactions %}
-                    <tr>
-                        <td>{{ transaction.admission }}</td>
-                        <td>{{ transaction.installment_no }}</td>
-                        <td>{{ transaction.installment_amt }}</td>
-                        <td>{{ transaction.agent_commission }}</td>
-                        <td>{{ transaction.agency_commission }}</td>
-                        <td>{{ transaction.agent_rate_applied }}</td>
-                        <td>{{ transaction.agency_rate_applied }}</td>
-                        <td>{{ transaction.created_date }}</td>
-                        <td>{{ transaction.modified_date }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load static %}
+    <title>{% block title %}Referral Management System{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        .hero-section {
+            background: url("{% static 'images/hero-bg.jpg' %}") no-repeat center center;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .hero-text {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .features-section {
+            padding: 60px 0;
+        }
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+        .feature-icon {
+            font-size: 50px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Referral Management</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'course_list' %}">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="hero-section">
+        <div class="hero-text">
+            <h1>Welcome to the Referral Management System</h1>
+            <p>Manage your referrals, admissions, and more with ease.</p>
+            <a href="{% url 'course_list' %}" class="btn btn-primary btn-lg">View Courses</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary btn-lg">Login</a>
+        </div>
     </div>
-</div>
-{% endblock %}
+    
+    <div class="container features-section">
+        <div class="row">
+            <div class="col-md-4 feature">
+                <div class="feature-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3>Manage Students</h3>
+                <p>Keep track of student information and manage their admissions efficiently.</p>
+            </div>
+            <div class="col-md-4 feature">
+                <div class="feature-icon">
+                    <i class="fas fa-school"></i>
+                </div>
+                <h3>Institutions</h3>
+                <p>Maintain a comprehensive list of institutions and their details.</p>
+            </div>
+            <div class="col-md-4 feature">
+                <div class="feature-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Courses</h3>
+                <p>Browse and manage courses offered by various institutions.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="bg-light text-center text-lg-start">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Referral Management System</h5>
+                    <p>Efficiently manage referrals, students, institutions, and courses all in one place.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="{% url 'course_list' %}" class="text-dark">Courses</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'login' %}" class="text-dark">Login</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Contact</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <p class="text-dark">Email: info@example.com</p>
+                        </li>
+                        <li>
+                            <p class="text-dark">Phone: +123 456 7890</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

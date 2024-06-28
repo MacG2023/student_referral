@@ -2,7 +2,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Admission, AdmissionTransaction, Agent, Course
-from .forms import AdmissionForm, AgentChangeForm, AgentCreationForm, CourseForm, StudentForm, InstitutionForm
+from .forms import (AdmissionForm, AdmissionTransactionForm, AgentChangeForm, 
+AgentCreationForm, CourseForm, StudentForm, InstitutionForm)
+from django.contrib import messages
+
 
 from .models import Student,Institution
 
@@ -15,15 +18,15 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('admission_list')
         else:
             return render(request, 'referral/login.html', {'error': 'Invalid username or password'})
     return render(request, 'referral/login.html')
 
-@login_required
+
 def home_view(request):
-    transactions = AdmissionTransaction.objects.filter(created_by=request.user)
-    return render(request, 'referral/home.html', {'transactions': transactions})
+#    transactions = AdmissionTransaction.objects.filter(created_by=request.user)
+    return render(request, 'referral/home.html')
 
 
 
@@ -156,10 +159,28 @@ def add_admission_view(request):
         form = AdmissionForm()
     return render(request, 'referral/add_admission.html', {'form': form})
 
+# @login_required
+# def admission_list_view(request):
+#     admissions = Admission.objects.all()
+#     return render(request, 'referral/admission_list.html', {'admissions': admissions})
 @login_required
 def admission_list_view(request):
     admissions = Admission.objects.all()
-    return render(request, 'referral/admission_list.html', {'admissions': admissions})
+
+    # Handle search
+    search_query = request.GET.get('search', '')
+    if search_query:
+        admissions = admissions.filter(student__full_name__icontains=search_query)  # Example: search by student name
+
+    # Handle sorting
+    sort_by = request.GET.get('sort', '')
+    if sort_by:
+        admissions = admissions.order_by(sort_by)
+
+    context = {
+        'admissions': admissions
+    }
+    return render(request, 'referral/admission_list.html', context)
 
 @login_required
 def edit_admission_view(request, pk):
@@ -191,7 +212,7 @@ def add_course_view(request):
         form = CourseForm()
     return render(request, 'referral/add_course.html', {'form': form})
 
-@login_required
+
 def course_list_view(request):
     courses = Course.objects.all()
     return render(request, 'referral/course_list.html', {'courses': courses})
@@ -210,3 +231,45 @@ def edit_course_view(request, pk):
         form = CourseForm(instance=course)
     return render(request, 'referral/edit_course.html', {'form': form})
 
+
+
+@login_required
+def add_admission_transaction(request):
+    if request.method == 'POST':
+        form = AdmissionTransactionForm(request.POST)
+        if form.is_valid():
+            transaction = form.save(commit=False)
+            transaction.created_by = request.user
+            transaction.save()
+            return redirect('admission_transaction_list')
+    else:
+        form = AdmissionTransactionForm()
+    return render(request, 'referral/add_admission_transaction.html', {'form': form})
+
+@login_required
+def edit_admission_transaction(request, pk):
+    transaction = get_object_or_404(AdmissionTransaction, pk=pk)
+    if request.method == 'POST':
+        form = AdmissionTransactionForm(request.POST, instance=transaction)
+        if form.is_valid():
+            transaction = form.save(commit=False)
+            transaction.modified_by = request.user
+            transaction.save()
+            return redirect('admission_transaction_list')
+    else:
+        form = AdmissionTransactionForm(instance=transaction)
+    return render(request, 'referral/edit_admission_transaction.html', {'form': form})
+
+@login_required
+def admission_transaction_list(request):
+    transactions = AdmissionTransaction.objects.all()
+    return render(request, 'referral/admission_transaction_list.html', {'transactions': transactions})
+
+
+def delete_course(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    if request.method == 'POST':
+        course.delete()
+        messages.success(request, 'Course deleted successfully.')
+        return redirect('course_list')
+    return render(request, 'referral/course_list.html')

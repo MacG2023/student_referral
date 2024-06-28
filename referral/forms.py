@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Admission, Agent, Course, Student, Institution
+from .models import Admission, AdmissionTransaction, Agent, Course, Student, Institution
 
 class AgentCreationForm(UserCreationForm):
     class Meta:
@@ -55,3 +55,10 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['course_name', 'course_fee', 'duration']
+
+
+
+class AdmissionTransactionForm(forms.ModelForm):
+    class Meta:
+        model = AdmissionTransaction
+        fields = ['admission', 'installment_no', 'installment_amt', 'agent_commission', 'agency_commission', 'agent_rate_applied', 'agency_rate_applied']
