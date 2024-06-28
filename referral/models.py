@@ -15,6 +15,7 @@ class Agent(AbstractUser):
     modified_by = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, related_name='agent_modifier')
     modified_date = models.DateTimeField(auto_now=True)
     admin = models.BooleanField(default=False)
+    
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"

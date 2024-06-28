@@ -28,6 +28,8 @@ urlpatterns = [
     path('admission_transactions/', views.admission_transaction_list, name='admission_transaction_list'),
     path('courses/delete/<int:pk>/', views.delete_course, name='delete_course'),
     path('students/delete/<int:pk>/', views.delete_student, name='delete_student'),
-     path('institution/delete/<int:pk>/', views.delete_institution, name='delete_institution'),
-       path('agent/delete/<int:pk>/', views.delete_agent, name='delete_agent')
+    path('institution/delete/<int:pk>/', views.delete_institution, name='delete_institution'),
+    path('agent/delete/<int:pk>/', views.delete_agent, name='delete_agent'),
+    path('admission/delete/<int:pk>/', views.delete_admission, name='delete_admission'),
+    path('admission_transactions/delete/<int:pk>/', views.delete_admission_transaction, name='delete_admission_transaction'),
 ]

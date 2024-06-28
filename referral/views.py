@@ -293,6 +293,23 @@ def delete_institution(request, pk):
         return redirect('institution_list')
     return render(request, 'referral/student_list.html')
 
+def delete_admission(request, pk):
+    admission = get_object_or_404(Admission, pk=pk)
+    if request.method == 'POST':
+        admission.delete()
+        messages.success(request, 'Admission deleted successfully.')
+        return redirect('admission_list')
+    return render(request, 'referral/student_list.html')
+
+def delete_admission_transaction(request, pk):
+    print("coming here")
+    admission_transaction = get_object_or_404(AdmissionTransaction, pk=pk)
+    if request.method == 'POST':
+        admission_transaction.delete()
+        messages.success(request, 'Admission Transaction deleted successfully.')
+        return redirect('admission_transaction_list')
+    return render(request, 'referral/student_list.html')
+
 
 def delete_agent(request, pk):
     agent = get_object_or_404(Agent, pk=pk)
